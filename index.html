@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Flag Quiz</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- START SCREEN -->
+<section id="screen-start" class="screen active">
+  <div class="start-menu">
+    <button class="btn btn-primary btn-large" id="btn-go-game">Game</button>
+    <button class="btn btn-primary btn-large" id="btn-go-wiki">Wiki</button>
+    <button class="btn btn-primary btn-large" id="btn-go-options">Options</button>
+  </div>
+</section>
+
+<!-- GAME SETUP SCREEN -->
+<section id="screen-setup" class="screen">
+  <header class="screen-header">
+    <button class="icon-btn" id="btn-setup-back" aria-label="Back">&#8592;</button>
+    <h1>Game</h1>
+  </header>
+
+  <div class="setup-body">
+    <label class="setup-label" for="stack-select">Stack</label>
+    <div class="stack-row">
+      <select id="stack-select" class="stack-select"></select>
+      <button class="icon-btn" id="btn-edit-stack" aria-label="Edit stack"></button>
+    </div>
+
+    <div class="setup-label">Mode</div>
+    <div class="mode-options">
+      <button class="mode-tile" data-mode="choice">
+        <span class="mode-tile-title">Multiple Choice</span>
+        <span class="mode-tile-desc">Pick the correct country from four options</span>
+      </button>
+      <button class="mode-tile" data-mode="type">
+        <span class="mode-tile-title">Type the Answer</span>
+        <span class="mode-tile-desc">Type the country name yourself</span>
+      </button>
+    </div>
+
+    <button class="btn btn-primary btn-large" id="btn-start-game" disabled>Start</button>
+  </div>
+</section>
+
+<!-- CUSTOM STACK EDITOR (overlay) -->
+<section id="screen-editor" class="screen overlay">
+  <header class="screen-header">
+    <button class="icon-btn" id="btn-editor-close" aria-label="Close"></button>
+    <h1 id="editor-title">Create Stack</h1>
+    <button class="icon-btn" id="btn-editor-delete" aria-label="Delete stack" hidden></button>
+  </header>
+
+  <div class="editor-controls">
+    <button class="btn btn-small" id="btn-select-all">Select all</button>
+    <button class="btn btn-small" id="btn-deselect-all">Deselect all</button>
+  </div>
+
+  <div class="editor-list" id="editor-list"></div>
+
+  <div class="editor-footer">
+    <div class="editor-name-row">
+      <input type="text" id="editor-name-input" class="text-input" placeholder="Stack name" maxlength="60">
+      <button class="icon-btn icon-btn-accent" id="btn-editor-save" aria-label="Save" disabled></button>
+    </div>
+    <div class="editor-error" id="editor-error"></div>
+  </div>
+</section>
+
+<!-- GAME PLAY SCREEN -->
+<section id="screen-play" class="screen">
+  <header class="screen-header">
+    <button class="icon-btn" id="btn-play-quit" aria-label="Quit">&#8592;</button>
+    <span class="progress-label" id="progress-label">1 / 195</span>
+  </header>
+
+  <div class="play-body" id="play-body">
+    <div class="flag-wrap">
+      <img id="play-flag" class="play-flag" src="" alt="Flag">
+    </div>
+
+    <div id="choice-answers" class="choice-answers" hidden></div>
+
+    <div id="type-answer" class="type-answer" hidden>
+      <input type="text" id="type-input" class="text-input" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Type country name">
+      <button class="btn btn-primary" id="btn-type-submit">Enter</button>
+    </div>
+  </div>
+
+  <div id="feedback-banner" class="feedback-banner" hidden>
+    <span id="feedback-text"></span>
+  </div>
+</section>
+
+<!-- RESULTS SCREEN -->
+<section id="screen-results" class="screen">
+  <header class="screen-header">
+    <h1>Results</h1>
+  </header>
+  <div class="results-body">
+    <div class="results-summary">
+      <div class="results-stat results-correct">
+        <span class="results-stat-num" id="results-correct-num">0</span>
+        <span class="results-stat-label">Correct</span>
+      </div>
+      <div class="results-stat results-wrong">
+        <span class="results-stat-num" id="results-wrong-num">0</span>
+        <span class="results-stat-label">Wrong</span>
+      </div>
+    </div>
+
+    <div id="results-failed-wrap" class="results-failed-wrap" hidden>
+      <h2>Missed</h2>
+      <div id="results-failed-list" class="results-failed-list"></div>
+    </div>
+
+    <div class="results-actions">
+      <button class="btn btn-primary btn-large" id="btn-retry-failed" hidden>Retry failed</button>
+      <button class="btn btn-secondary btn-large" id="btn-results-back">Back to start</button>
+    </div>
+  </div>
+</section>
+
+<!-- WIKI SCREEN -->
+<section id="screen-wiki" class="screen">
+  <header class="screen-header">
+    <button class="icon-btn" id="btn-wiki-back" aria-label="Back">&#8592;</button>
+    <h1>Wiki</h1>
+  </header>
+  <div class="wiki-grid" id="wiki-grid"></div>
+</section>
+
+<!-- OPTIONS SCREEN -->
+<section id="screen-options" class="screen">
+  <header class="screen-header">
+    <button class="icon-btn" id="btn-options-back" aria-label="Back">&#8592;</button>
+    <h1>Options</h1>
+  </header>
+  <div class="options-body">
+    <p class="coming-soon">Coming soon</p>
+  </div>
+</section>
+
+<script src="data/countries.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/game.js"></script>
+<script src="js/icons.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
