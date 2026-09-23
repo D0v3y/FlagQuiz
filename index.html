@@ -14,6 +14,7 @@
     <button class="btn btn-primary btn-large" id="btn-go-game">Game</button>
     <button class="btn btn-primary btn-large" id="btn-go-wiki">Wiki</button>
     <button class="btn btn-primary btn-large" id="btn-go-options">Options</button>
+    <button class="btn btn-primary btn-large" id="btn-go-stats">Stats</button>
   </div>
 </section>
 
@@ -29,6 +30,18 @@
     <div class="stack-row">
       <select id="stack-select" class="stack-select"></select>
       <button class="icon-btn" id="btn-edit-stack" aria-label="Edit stack"></button>
+    </div>
+
+    <p id="setup-logging-warning" class="setup-logging-warning" hidden>Stats are disabled!</p>
+
+    <div class="setup-label">Question Type</div>
+    <div class="switch-row">
+      <span class="switch-row-label">Guess the Country</span>
+      <label class="switch">
+        <input type="checkbox" id="question-type-switch">
+        <span class="switch-slider"></span>
+      </label>
+      <span class="switch-row-label">Guess the Flag</span>
     </div>
 
     <div class="setup-label">Mode</div>
@@ -75,19 +88,26 @@
 <section id="screen-play" class="screen">
   <header class="screen-header">
     <button class="icon-btn" id="btn-play-quit" aria-label="Quit">&#8592;</button>
-    <span class="progress-label" id="progress-label">1 / 195</span>
+    <div class="play-header-right">
+      <span id="time-limit-label" class="time-limit-label" hidden></span>
+      <span class="progress-label" id="progress-label">1 / 195</span>
+    </div>
   </header>
 
   <div class="play-body" id="play-body">
     <div class="flag-wrap">
       <img id="play-flag" class="play-flag" src="" alt="Flag">
+      <div id="play-prompt-name" class="play-prompt-name" hidden></div>
     </div>
 
     <div id="choice-answers" class="choice-answers" hidden></div>
 
-    <div id="type-answer" class="type-answer" hidden>
-      <input type="text" id="type-input" class="text-input" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Type country name">
-      <button class="btn btn-primary" id="btn-type-submit">Enter</button>
+    <div id="type-answer-wrap" class="type-answer-wrap" hidden>
+      <div id="type-answer" class="type-answer">
+        <input type="text" id="type-input" class="text-input" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Type country name">
+        <button class="btn btn-primary" id="btn-type-submit">Enter</button>
+      </div>
+      <ul id="autosuggest-list" class="autosuggest-list" hidden></ul>
     </div>
   </div>
 
@@ -141,7 +161,81 @@
     <h1>Options</h1>
   </header>
   <div class="options-body">
-    <p class="coming-soon">Coming soon</p>
+    <div class="option-row">
+      <label class="option-label" for="option-min-wrong-from-stack">Wrong answers from stack (Multiple Choice)</label>
+      <p class="option-desc">
+        Minimum number of the 3 wrong answers that must come from the selected
+        stack. Disregarded automatically when the stack is too small.
+      </p>
+      <select id="option-min-wrong-from-stack" class="stack-select">
+        <option value="0">0 — no requirement</option>
+        <option value="1">1 — at least 1 from the stack</option>
+        <option value="2">2 — at least 2 from the stack</option>
+        <option value="3">3 — all wrong answers from the stack</option>
+      </select>
+    </div>
+
+    <div class="option-row">
+      <label class="option-checkbox-row">
+        <input type="checkbox" id="option-autosuggest-enabled">
+        <span>Autosuggest country names (Type the Answer)</span>
+      </label>
+    </div>
+
+    <div class="option-row">
+      <label class="option-label" for="option-autosuggest-min-letters">Show suggestions after this many letters</label>
+      <select id="option-autosuggest-min-letters" class="stack-select">
+        <option value="1">1 letter</option>
+        <option value="2">2 letters</option>
+        <option value="3">3 letters</option>
+        <option value="4">4 letters</option>
+        <option value="5">5 letters</option>
+      </select>
+    </div>
+
+    <div class="option-row">
+      <label class="option-checkbox-row">
+        <input type="checkbox" id="option-logging-enabled">
+        <span>Enable stats logging</span>
+      </label>
+      <p class="option-desc">
+        Tracks session history and per-country success rates. When off, the
+        stack/mode selector shows a warning and nothing is recorded.
+      </p>
+    </div>
+
+    <div class="option-row">
+      <label class="option-checkbox-row">
+        <input type="checkbox" id="option-time-limit-enabled">
+        <span>Enable time limit per task</span>
+      </label>
+      <div class="option-inline-row">
+        <label class="option-label" for="option-time-limit-seconds">Seconds per task</label>
+        <input type="number" id="option-time-limit-seconds" class="text-input option-number-input" min="1" max="120" value="10">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS SCREEN -->
+<section id="screen-stats" class="screen">
+  <header class="screen-header">
+    <button class="icon-btn" id="btn-stats-back" aria-label="Back">&#8592;</button>
+    <h1>Stats</h1>
+    <button class="icon-btn" id="btn-stats-clear" aria-label="Clear stats"></button>
+  </header>
+
+  <div class="stats-tabs">
+    <button class="stats-tab selected" type="button" data-tab="countries">Countries</button>
+    <button class="stats-tab" type="button" data-tab="sessions">Sessions</button>
+  </div>
+
+  <div id="stats-countries-panel" class="stats-panel">
+    <div class="stats-countries-list" id="stats-countries-list"></div>
+  </div>
+
+  <div id="stats-sessions-panel" class="stats-panel" hidden>
+    <div class="stats-sessions-list" id="stats-sessions-list"></div>
   </div>
 </section>
 
